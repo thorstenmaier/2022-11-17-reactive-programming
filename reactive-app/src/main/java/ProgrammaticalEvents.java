@@ -5,18 +5,13 @@ public class ProgrammaticalEvents {
     public static void main(String[] args) {
         PublishSubject<String> subject = PublishSubject.create();
         subject.subscribe(
-                s -> System.out.println(s),
-                e -> e.printStackTrace(),
-                () -> System.out.println("COMPLETE")
-        );
-        subject.subscribe(
-                s -> System.out.println(s),
-                e -> e.printStackTrace(),
-                () -> System.out.println("COMPLETE")
+                s -> System.out.println(s)
         );
 
         subject.onNext("Hallo");
+        subject.subscribe(
+                s -> System.out.println(s)
+        );
         subject.onNext("Welt");
-        subject.onError(new RuntimeException("Fehler"));
     }
 }
