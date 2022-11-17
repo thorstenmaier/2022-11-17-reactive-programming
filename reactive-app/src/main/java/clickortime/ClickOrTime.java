@@ -12,10 +12,12 @@ public class ClickOrTime {
         Observable<ClickEvent> clicks = Observable.interval(5, TimeUnit.SECONDS)
                 .map(i -> new ClickEvent());
 
-        Observable.merge(timer, clicks).subscribe(e -> {
-            System.out.println("SEND MAIL " + e);
-        });
+        Observable<MailEvent> mailEventsAusTimer = timer.map(t -> new MailEvent());
+        Observable<MailEvent> mailEventsAusClicks = clicks.map(t -> new MailEvent());
 
-        Thread.sleep(10_000);
+        mailEventsAusTimer.mergeWith(mailEventsAusClicks)
+                .blockingSubscribe(e -> {
+                    System.out.println("SEND MAIL " + e);
+                });
     }
 }
