@@ -9,9 +9,14 @@ public class ProgrammaticalEvents {
                 e -> e.printStackTrace(),
                 () -> System.out.println("COMPLETE")
         );
+        subject.subscribe(
+                s -> System.out.println(s),
+                e -> e.printStackTrace(),
+                () -> System.out.println("COMPLETE")
+        );
 
         subject.onNext("Hallo");
         subject.onNext("Welt");
-        subject.onComplete();
+        subject.onError(new RuntimeException("Fehler"));
     }
 }
