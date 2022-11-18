@@ -5,26 +5,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-import java.time.Duration;
-
 @SpringBootApplication
 public class ProjectReactorFlatmapApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProjectReactorFlatmapApplication.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(ProjectReactorFlatmapApplication.class, args);
 
 
-		Flux.just("Maier", "Müller", "Schmitt")
-				.flatMap(lastname -> personWebservice(lastname))
-				.subscribe(System.out::println);
-	}
+        Flux.just("Maier", "Müller", "Schmitt")
+                .flatMap(lastname -> personWebservice(lastname))
+                .subscribe(System.out::println);
+    }
 
-	public static Flux<Person> personWebservice(String lastname) {
-		return WebClient.create("http://localhost:8080/person")
-				.get()
-				.uri(uriBuilder -> uriBuilder.queryParam("lastname", lastname).build())
-				.retrieve()
-				.bodyToFlux(Person.class);
-	}
+    public static Flux<Person> personWebservice(String lastname) {
+        return WebClient.create("http://localhost:8080/person")
+                .get()
+                .uri(uriBuilder -> uriBuilder.queryParam("lastname", lastname).build())
+                .retrieve()
+                .bodyToFlux(Person.class);
+    }
 
 }
