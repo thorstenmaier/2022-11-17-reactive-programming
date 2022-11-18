@@ -15,5 +15,6 @@ public class MyInterval {
                 .subscribe(System.out::println); // Computation-Thread
 
         Thread.sleep(100_000); // main
+
     }
 }
