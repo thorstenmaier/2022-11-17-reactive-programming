@@ -1,6 +1,7 @@
 package com.example.projectreactorflatmap;
 
 public class Person {
+    private Long id;
     private String name;
 
     public Person() {
@@ -8,6 +9,14 @@ public class Person {
 
     public Person(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -21,7 +30,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
