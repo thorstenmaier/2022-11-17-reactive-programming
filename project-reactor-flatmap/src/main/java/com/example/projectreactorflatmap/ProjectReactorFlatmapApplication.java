@@ -2,6 +2,7 @@ package com.example.projectreactorflatmap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
@@ -13,14 +14,17 @@ public class ProjectReactorFlatmapApplication {
 		SpringApplication.run(ProjectReactorFlatmapApplication.class, args);
 
 
-		Flux.just("Maier")
+		Flux.just("Maier", "Müller", "Schmitt")
 				.flatMap(lastname -> personWebservice(lastname))
 				.subscribe(System.out::println);
 	}
 
 	public static Flux<Person> personWebservice(String lastname) {
-		return Flux.just(new Person(lastname), new Person(lastname), new Person(lastname))
-				.delayElements(Duration.ofSeconds(1));
+		return WebClient.create("http://localhost:8080/person")
+				.get()
+				.uri(uriBuilder -> uriBuilder.queryParam("lastname", lastname).build())
+				.retrieve()
+				.bodyToFlux(Person.class);
 	}
 
 }
