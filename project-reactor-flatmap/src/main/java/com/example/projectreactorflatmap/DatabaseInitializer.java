@@ -3,6 +3,7 @@ package com.example.projectreactorflatmap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Component;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
