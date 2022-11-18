@@ -11,10 +11,11 @@ public class HotObservable {
         PublishSubject<Long> subject = PublishSubject.create();
 
         subject // Hot Observable - Thread 1
+                .toFlowable(BackpressureStrategy.LATEST)
                 .observeOn(Schedulers.computation())
                 .subscribe(l -> { // Thread 2
                     System.out.println(l);
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 });
 
         long count = 0;
