@@ -18,11 +18,13 @@ public class DatabaseInitializer {
     @PostConstruct
     public void init() {
         Flux.just("CREATE TABLE Person (id int, name varchar(255))")
-                        .map(sql -> databaseClient.sql(sql).fetch().rowsUpdated())
+                .map(sql -> databaseClient.sql(sql).fetch().rowsUpdated())
                 .blockLast().subscribe();
 
-        personRepository.save(new Person("Maier1")).subscribe();
-        personRepository.save(new Person("Maier2")).subscribe();
+        Flux.just("Maier1", "Maier2")
+                .map(Person::new)
+                .flatMap(personRepository::save)
+                .subscribe();
 
     }
 }
